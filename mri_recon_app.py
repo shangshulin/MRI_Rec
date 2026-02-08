@@ -225,7 +225,7 @@ class MRIReconGUI:
             img = plt.imread(self.ref_img_path)
             self.ax_ref.clear()
             self.ax_ref.imshow(img, cmap='gray')
-            self.ax_ref.set_title("参考图像")
+            self.ax_ref.set_title("参考图像", fontsize=20)
             self.ax_ref.axis('off')
             self.canvas.draw()
     
