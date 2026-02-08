@@ -150,11 +150,18 @@ class MRIReconGUI:
         self.plot_frame = tk.Frame(root)
         self.plot_frame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True, padx=5, pady=5)
         
-        # 创建matplotlib画布 - 显著增大figsize并使用constrained_layout
+        # 创建matplotlib画布
+        # 1. 设置DPI为100，这样 figsize=(15, 8) 对应 1500x800 像素
+        # 2. 图像核心区域将更接近 256x256 的原始比例
         self.fig, (self.ax_k, self.ax_recon, self.ax_ref) = plt.subplots(
-            1, 3, figsize=(14, 8), constrained_layout=True
+            1, 3, figsize=(15, 8), dpi=100, constrained_layout=True
         )
-        self.fig.suptitle("MRI图像重建结果", fontsize=18, fontweight='bold')
+        # 强制设置子图比例为1:1（正方形）
+        for ax in [self.ax_k, self.ax_recon, self.ax_ref]:
+            ax.set_aspect('equal', adjustable='box')
+            
+        # 设置标题字号为28，并通过y参数上移位置以增加段后间距
+        self.fig.suptitle("MRI图像重建结果", fontsize=28, fontweight='bold', y=1.05)
         
         # 初始化子图标题
         self.ax_k.set_title("K空间数据", fontsize=20)
